@@ -1,38 +1,55 @@
-.App {
-  text-align: center;
+.home{
+  margin: auto;
+  max-width: 900px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.home .heading{
+  font-size: 2.5rem;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding: 25px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.home .form{
+  padding: 40px 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.home .form label{
+  font-weight: bold;
+  margin-right: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.home .form .save{
+  background-color: rgb(7, 152, 209);
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.home .form .save:hover{
+  background-color: rgb(6, 130, 179);
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.home .data .d1{
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgb(179, 177, 177);
+  display: inline-block;
 }
