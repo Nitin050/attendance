@@ -30,7 +30,6 @@ function App() {
   }
 
   const checkOutFun = (i) => {
-    console.log('clicked',i)
     var checkOutTime = new Date().getHours() + ':' + new Date().getMinutes();
     var list_copy = data;
     list_copy[i].checkOut = checkOutTime
