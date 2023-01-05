@@ -5,42 +5,37 @@ function App() {
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
   const [rollNo, setRollNo] = useState('');
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
   const [studentsInside, setStudentsInside] = useState(0);
 
-  function isBefore(tm){
-    var timeNow = new Date().toLocaleTimeString([], { hour: '2-digit', minute: "2-digit", hour12: false });
-    if( timeNow >= tm ) 
-        return true 
-    else
-        return false
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => setStudentsInside(()=>{
-      var i = 0;
-      data.forEach(d=>{
-        if(isBefore(d.checkIn) && !isBefore(d.checkOut)){
-          i++;
-        }
-      })
-      return i;
-    }), 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [data]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setData(d=>[...d, {
-      name, rollNo, checkIn, checkOut
-    }]);
+    var is_repetition = false;
+    data.every(d=>{
+      if(d.rollNo == rollNo){
+        alert('Roll no. already exist');
+        is_repetition = true;
+        return false;
+      }
+    })
+    if(!is_repetition){
+      var checkInTime = new Date().getHours() + ':' + new Date().getMinutes();
+      setData(d=>[...d, {
+        name, rollNo, checkIn: checkInTime, checkOut: ''
+      }]);
+      setStudentsInside(si=>si+1);
+    }
     setName('');
     setRollNo('');
-    setCheckIn('');
-    setCheckOut('');
+  }
+
+  const checkOutFun = (i) => {
+    console.log('clicked',i)
+    var checkOutTime = new Date().getHours() + ':' + new Date().getMinutes();
+    var list_copy = data;
+    list_copy[i].checkOut = checkOutTime
+    setData([...list_copy]);
+    setStudentsInside(si=>si-1);
   }
 
   return (
@@ -54,10 +49,6 @@ function App() {
           <input onChange={(e)=>setName(e.target.value)} value={name} required type="text" id="name" name="name" /><br/><br/>
           <label htmlFor="rollno">Roll No: </label>
           <input onChange={(e)=>setRollNo(e.target.value)} value={rollNo} required type="number" id="rollno" name="rollno" /><br/><br/>
-          <label htmlFor="checkin">Check In: </label>
-          <input onChange={(e)=>setCheckIn(e.target.value)} value={checkIn} required type="time" id="checkin" name="checkin" /><br/><br/>
-          <label htmlFor="checkout">Check Out: </label>
-          <input onChange={(e)=>setCheckOut(e.target.value)} value={checkOut} required type="time" id="checkout" name="checkout" /><br/><br/>
           <button className='save' type='submit'>
             Save
           </button>
@@ -80,7 +71,13 @@ function App() {
               <td>{d.rollNo}</td>
               <td>{d.name}</td>
               <td>{d.checkIn}</td>
-              <td>{d.checkOut}</td>
+              {d.checkOut ?
+                <td>{d.checkOut}</td> 
+              :
+                <td>
+                  <div onClick={()=>checkOutFun(i)} className='checkOutBtn'>Click to Check Out</div>
+                </td>
+              }
             </tr>
           ))}
         </table>
